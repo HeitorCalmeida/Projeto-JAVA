@@ -4,7 +4,7 @@ public abstract class Conta {
 
 	protected String cpfTitular;
 	protected double saldo;
-	
+	protected String tipoConta;
 	
 	public Conta(String cpfTitular) {
 		if(cpfTitular.length() == 11) {
@@ -27,9 +27,12 @@ public abstract class Conta {
 		if(this.saldo > quantidade) {
 			this.saldo -= quantidade;
 		}
-		
 	}
 	
+	public String getTipoConta() {
+		return tipoConta;
+	}
+
 	@Override
 	public String toString() {
 		return
