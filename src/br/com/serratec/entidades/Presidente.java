@@ -1,5 +1,6 @@
 package br.com.serratec.entidades;
 
-public class Presidente {
+public class Presidente extends Funcionario{
+	
 
 }
