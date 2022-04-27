@@ -1,5 +1,8 @@
 package br.com.serratec.entidades;
 
-public class Funcionario {
-
+public class Funcionario extends Usuario{
+	
+	
+	
+	
 }
