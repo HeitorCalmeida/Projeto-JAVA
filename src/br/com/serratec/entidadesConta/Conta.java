@@ -1,5 +1,9 @@
 package br.com.serratec.entidadesConta;
 
-public class Conta {
+public abstract class Conta {
 
+	
+	
+	
+	
 }
