@@ -1,10 +1,13 @@
 package br.com.serratec.entidadesConta;
 
+import br.com.serratec.entidades.Pessoa;
+
 public abstract class Conta {
 
 	protected String cpfTitular;
 	protected double saldo;
 	protected String tipoConta;
+	protected Pessoa pessoa;
 	
 	public Conta(String cpfTitular) {
 		if(cpfTitular.length() == 11) {

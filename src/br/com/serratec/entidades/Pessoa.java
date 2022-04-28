@@ -1,10 +1,11 @@
 package br.com.serratec.entidades;
 
-public class Usuario {
+public class Pessoa {
 	protected String cpf;
 	protected String nome;
 	protected String senha;
-	public Usuario(String cpf, String nome, String senha) {
+	
+	public Pessoa(String cpf, String nome, String senha) {
 		super();
 		this.cpf = cpf;
 		this.nome = nome;
