@@ -21,8 +21,9 @@ public class ContaCorrente extends Conta {
 	}
 	
 	public void pedirEmprestimo(double valor){
-		if(this.limiteEmprestimo > valor) {
-			this.limiteEmprestimo -= valor;			
+		if(this.limiteEmprestimo >= valor) {
+			this.limiteEmprestimo -= valor;	
+			this.saldo += valor;
 		}
 	}
 	

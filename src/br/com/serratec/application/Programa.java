@@ -18,8 +18,9 @@ public class Programa {
 	public static void main(String[] args) {
 	
 		Scanner sc = new Scanner(System.in);
+		
 
-		List<Pessoa> listaPessoas = new ArrayList<Pessoa>();
+		//List<Pessoa> listaPessoas = new ArrayList<Pessoa>();
 		List<Conta> listaContas = new ArrayList<Conta>();
 
 /*		List<Cliente> listaClientes = new ArrayList<Cliente>();

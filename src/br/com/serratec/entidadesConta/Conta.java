@@ -7,7 +7,7 @@ public abstract class Conta {
 	protected double saldo;
 	protected String tipoConta;
 	protected Pessoa pessoa;
-	protected Double valorTributo;
+	protected double valorTributo;
 
 	public Conta(Pessoa pessoa) {
 		this.pessoa = pessoa;
@@ -20,14 +20,14 @@ public abstract class Conta {
 
 	public void deposito(double quantidade) {
 		this.saldo += quantidade;
-		this.saldo -= (quantidade + 00.10);
-		this.valorTributo += quantidade + 0.10;
+		this.saldo -= 00.10;
+		this.valorTributo += 00.10;
 	}
 
 	public void saque(double quantidade) {
-		if (this.saldo > quantidade) {
+		if (this.saldo >= (quantidade + 00.10)) {
 			this.saldo -= (quantidade + 00.10);
-			this.valorTributo += quantidade + 0.10;
+			this.valorTributo += 00.10;
 		}
 	}
 
