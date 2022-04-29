@@ -39,8 +39,10 @@ public class Programa {
 
 		Pessoa cl1 = new Cliente("77345678910","Pedro","22374");
 		Conta conta2 = new ContaCorrente(cl1,1200);
+		Conta conta7 = new ContaPoupanca(cl1, 2000);
 		//listaPessoas.add(cl1);
 		listaContas.add(conta2);
+		listaContas.add(conta7);
 		
 		Pessoa ger1 = new Gerente("90345678910","Amanda","892374");
 		Conta conta3 = new ContaCorrente(ger1,1860);
@@ -51,6 +53,8 @@ public class Programa {
 		Conta conta4 = new ContaPoupanca(pres1,5000);
 		//listaPessoas.add(pres1);
 		listaContas.add(conta4);
+		
+		
 		
 		
 /*		System.out.println("-=-= Pessoas =-=-\n-------------------");

@@ -5,6 +5,6 @@ public interface Taxas {
 	double taxaDeposito();
 	double taxaTransferencia();
 	double taxaJuros();
-	double taxaSeguroVida();
+	//double taxaSeguroVida();
 
 }

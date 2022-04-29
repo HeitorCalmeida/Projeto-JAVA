@@ -15,6 +15,15 @@ public class ContaPoupanca extends Conta{
 			return rendimento;
 		}
 		
-		
+		public void render() {
+	        if(saldo >= 400000.00) {
+	            rendimento = saldo * 0.007;
+	        }else if (saldo < 200000.00) {
+	                rendimento = saldo * 0.003;
+	        }else {
+	            rendimento = saldo *0.005;
+	        }
+	        saldo += rendimento;
+	    }
 
 }
