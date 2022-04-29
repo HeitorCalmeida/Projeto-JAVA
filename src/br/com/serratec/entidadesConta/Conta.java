@@ -4,19 +4,13 @@ import br.com.serratec.entidades.Pessoa;
 
 public abstract class Conta {
 
-	protected String cpfTitular;
 	protected double saldo;
 	protected String tipoConta;
 	protected Pessoa pessoa;
 	
-	public Conta(String cpfTitular) {
-		if(cpfTitular.length() == 11) {
-			this.cpfTitular = cpfTitular;
-		}
-	}
-	
-	public String getCpfTitular() {
-		return cpfTitular;
+	public Conta(Pessoa pessoa) {
+			this.pessoa = pessoa;
+		
 	}
 
 	public double getSaldo() {
@@ -28,7 +22,7 @@ public abstract class Conta {
 	}
 	public void saque(double quantidade) {
 		if(this.saldo > quantidade) {
-			this.saldo -= quantidade;
+			this.saldo -= (100 + 00.10);
 		}
 	}
 	
@@ -36,12 +30,19 @@ public abstract class Conta {
 		return tipoConta;
 	}
 
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
 	@Override
 	public String toString() {
-		return
-				 "\nCPFtitular: " 
-				+ cpfTitular 
-				+ "\nsaldo: " 
-				+ saldo;
+		return	
+				"Dono da Conta:\n"
+				+ pessoa
+				+ "\nSALDO: " 
+				+ saldo
+				+ "\nTIPO: "
+				+ tipoConta;
+			
 	}
 }

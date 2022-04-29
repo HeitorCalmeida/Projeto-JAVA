@@ -1,11 +1,13 @@
 package br.com.serratec.entidadesConta;
 
+import br.com.serratec.entidades.Pessoa;
+
 public class ContaCorrente extends Conta {
 
 	private double limiteEmprestimo;
 
-	public ContaCorrente(String cpfTitular, double limiteEmprestimo) {
-		super(cpfTitular);
+	public ContaCorrente(Pessoa pessoa, double limiteEmprestimo) {
+		super(pessoa);
 		this.limiteEmprestimo = limiteEmprestimo;
 		this.tipoConta = "Conta-Corrente";
 	}
@@ -26,11 +28,15 @@ public class ContaCorrente extends Conta {
 	
 	@Override
 	public String toString() {
-		return "Limite de Emprestimo: " 
-				+ limiteEmprestimo
-				+ "\ncPFtitular: "
-				+ cpfTitular
-				+ "\nsaldo: "
-				+ saldo;
+		return 
+				"Dono da Conta:\n"
+				+ pessoa
+				+ "\nSALDO: " 
+				+ saldo
+				+ "\nTIPO: "
+				+ tipoConta
+				+"\nLIMITE EMPRESTIMO: " 
+				+ limiteEmprestimo;
+				
 	}
 }

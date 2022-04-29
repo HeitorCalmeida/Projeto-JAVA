@@ -10,5 +10,19 @@ public abstract class Funcionario extends Pessoa{
 
 	public String getCargo() {
 		return cargo;
+		
+	}
+
+	@Override
+	public String toString() {
+		return 	"NOME: "
+				+ nome
+				+ "\nCPF: " 
+				+ cpf
+				+ "\nSENHA: "
+				+ senha
+				+ "\nCARGO: "
+				+ cargo;
+							
 	}
 }

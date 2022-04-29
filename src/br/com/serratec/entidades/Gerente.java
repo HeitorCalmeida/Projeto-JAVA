@@ -6,6 +6,7 @@ public class Gerente extends Funcionario{
 	public Gerente(String cpf, String nome, String senha) {
 		super(cpf, nome, senha);
 		this.agencia = agencia;
+		this.cargo = "Gerente";
 
 	}
 
