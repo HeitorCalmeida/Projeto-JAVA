@@ -21,13 +21,13 @@ public abstract class Conta {
 	public void deposito(double quantidade) {
 		this.saldo += quantidade;
 		this.saldo -= (quantidade + 00.10);
-		
+		this.valorTributo += quantidade + 0.10;
 	}
-	
 
 	public void saque(double quantidade) {
 		if (this.saldo > quantidade) {
 			this.saldo -= (quantidade + 00.10);
+			this.valorTributo += quantidade + 0.10;
 		}
 	}
 
@@ -37,6 +37,10 @@ public abstract class Conta {
 
 	public Pessoa getPessoa() {
 		return pessoa;
+	}
+	
+	public double getValorTributo() {
+		return valorTributo;
 	}
 
 	@Override
