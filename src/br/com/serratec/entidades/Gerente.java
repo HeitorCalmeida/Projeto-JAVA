@@ -1,19 +1,21 @@
 package br.com.serratec.entidades;
 
-public class Gerente extends Funcionario{
-	public char agencia;
+import br.com.serratec.enums.Agencia;
 
-	public Gerente(String cpf, String nome, String senha) {
+public class Gerente extends Funcionario{
+	private Agencia agencia;
+
+	public Gerente(String cpf, String nome, String senha, Agencia agencia) {
 		super(cpf, nome, senha, 2);
 		this.agencia = agencia;
 
 	}
 
-	public char getAgencia() {
+	public Agencia getAgencia() {
 		return agencia;
 	}
 
-	public void setAgencia(char agencia) {
+	public void setAgencia(Agencia agencia) {
 		this.agencia = agencia;
 	}
 	
