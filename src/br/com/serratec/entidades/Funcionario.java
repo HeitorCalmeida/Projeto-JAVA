@@ -1,16 +1,15 @@
 package br.com.serratec.entidades;
 
 public abstract class Funcionario extends Pessoa{
-	protected String cargo;
-	
-	public Funcionario(String cpf, String nome, String senha) {
-		super(cpf, nome, senha);
+
+	public Funcionario(String cpf, String nome, String senha, Integer tipo) {
+		super(cpf, nome, senha, tipo);
 		
 	}
 
-	public String getCargo() {
-		return cargo;
-		
+	public Integer getTipo() {
+		return tipo;
+
 	}
 
 	@Override
@@ -21,8 +20,8 @@ public abstract class Funcionario extends Pessoa{
 				+ cpf
 				+ "\nSENHA: "
 				+ senha
-				+ "\nCARGO: "
-				+ cargo;
+				+ "\nTIPO: "
+				+ tipo;
 							
 	}
 }
