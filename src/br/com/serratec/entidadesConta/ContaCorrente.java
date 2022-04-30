@@ -1,13 +1,14 @@
 package br.com.serratec.entidadesConta;
 
 import br.com.serratec.entidades.Pessoa;
+import br.com.serratec.enums.Agencia;
 
 public class ContaCorrente extends Conta {
 
 	private double limiteEmprestimo;
 
-	public ContaCorrente(Pessoa pessoa, double limiteEmprestimo) {
-		super(pessoa);
+	public ContaCorrente(Pessoa pessoa,Agencia agencia, double limiteEmprestimo) {
+		super(pessoa,agencia);
 		this.limiteEmprestimo = limiteEmprestimo;
 		this.tipoConta = "Conta-Corrente";
 	}

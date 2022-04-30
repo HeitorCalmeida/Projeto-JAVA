@@ -1,6 +1,7 @@
 package br.com.serratec.entidadesConta;
 
 import br.com.serratec.entidades.Pessoa;
+import br.com.serratec.enums.Agencia;
 
 public abstract class Conta {
 
@@ -8,9 +9,11 @@ public abstract class Conta {
 	protected String tipoConta;
 	protected Pessoa pessoa;
 	protected double valorTributo;
+	protected Agencia agencia;
 
-	public Conta(Pessoa pessoa) {
+	public Conta(Pessoa pessoa,Agencia agencia) {
 		this.pessoa = pessoa;
+		this.agencia = agencia;
 
 	}
 

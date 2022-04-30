@@ -2,23 +2,18 @@ package br.com.serratec.enums;
 
 public enum Agencia {
 	
-	A001('1'),
-	A002('2'),
-	A003('3');
+	A001("Ag 001"),
+	A002("Ag 002"),
+	A003("Ag 003");
 	
-	public char idAgencia;
+	public String idAgencia;
 
-	private Agencia(char idAgencia) {
+	private Agencia(String idAgencia) {
 		this.idAgencia = idAgencia;
 	}
 
-	public char getIdAgencia() {
+	public String getNomeAgencia() {
 		return idAgencia;
 	}
 
-	public void setIdAgencia(char idAgencia) {
-		this.idAgencia = idAgencia;
-	}
-	
-	
 }

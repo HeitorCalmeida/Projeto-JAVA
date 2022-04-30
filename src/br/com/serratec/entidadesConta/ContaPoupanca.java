@@ -1,12 +1,13 @@
 package br.com.serratec.entidadesConta;
 
 import br.com.serratec.entidades.Pessoa;
+import br.com.serratec.enums.Agencia;
 
 public class ContaPoupanca extends Conta{
 		private double rendimento;
 
-		public ContaPoupanca(Pessoa pessoa, double rendimento) {
-			super(pessoa);
+		public ContaPoupanca(Pessoa pessoa,Agencia agencia, double rendimento) {
+			super(pessoa,agencia);
 			this.rendimento = rendimento;
 			this.tipoConta = "Conta-Poupança";
 		}

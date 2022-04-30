@@ -12,14 +12,21 @@ import br.com.serratec.entidades.Presidente;
 import br.com.serratec.entidadesConta.Conta;
 import br.com.serratec.entidadesConta.ContaCorrente;
 import br.com.serratec.entidadesConta.ContaPoupanca;
+import br.com.serratec.enums.Agencia;
 
 public class Programa {
+
+	private static final Agencia A001 = null;
 
 	public static void main(String[] args) {
 	
 		Scanner sc = new Scanner(System.in);
 		
 
+		System.out.println(Agencia.A001.getNomeAgencia());
+		
+		
+		
 		//List<Pessoa> listaPessoas = new ArrayList<Pessoa>();
 		List<Conta> listaContas = new ArrayList<Conta>();
 
@@ -29,7 +36,7 @@ public class Programa {
 		List<Presidente> listaPresidentes = new ArrayList<Presidente>();           */
 
 		Pessoa dir = new Diretor("13128451550","Gabriel","12345");
-		Conta conta1 = new ContaCorrente(dir,800);
+		Conta conta1 = new ContaCorrente(dir,A001,800);
 		//listaPessoas.add(dir);
 		listaContas.add(conta1);
 		
