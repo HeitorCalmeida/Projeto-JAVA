@@ -80,7 +80,7 @@ public class Programa {
                         }
                     }
                 } catch (InputMismatchException e) {
-                    System.out.println("\nOpção invalida!\nInforme uma opção valida!!!");
+                    System.out.println("Opção invalida!\nInforme uma opção valida!!!");
                     erro = true;
                     sc.next();
                 }
@@ -124,7 +124,7 @@ public class Programa {
                 "\n2 - Depósito" +
                 "\n3 - Transferência" +
                 "\n4 - Saldo" +
-                "\n5 - Tributação da conta corrente" +
+                "\n5 - Tributação da conta" +
                 "\n6 - Rendimento da poupança";
         if (usuario.getTipo() == 1) {
             menuCliente((Cliente) usuario, opt);
@@ -164,10 +164,10 @@ public class Programa {
                 fazerTransferencia();
                 break;
             case 4:
-                System.out.println("4");
+                mostarSaldo();
                 break;
             case 5:
-                System.out.println("5");
+                mostarTaxas();
                 break;
             case 6:
                 System.out.println("6");
@@ -359,6 +359,58 @@ public class Programa {
         for (Conta conta : listaContas) {
             if (conta.getPessoa() == usuario) {
                 System.out.println("Conta: " + conta.getNumeroConta() + " / Tipo: " + conta.getTipoConta());
+            }
+        }
+    }
+
+    private static void mostarSaldo() {
+        System.out.println("\n--------------------------- Saldo ---------------------------");
+        Integer contaEscolhida = null;
+        boolean continuar = false;
+        while ((contaEscolhida == null) || (!continuar)) {
+            try {
+                System.out.println("Escolha uma conta!");
+                mostrasContas();
+                System.out.print("Numero da conta: ");
+                contaEscolhida = sc.nextInt();
+                Conta conta = validaConta(contaEscolhida);
+                if (conta != null) {
+                    continuar = true;
+                    System.out.printf("Saldo: %.2f\n", conta.getSaldo());
+                } else {
+                    System.out.println("Esta conta não existe!\n");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Conta invalida!\n");
+            }
+        }
+    }
+
+    private static void mostarTaxas(){
+        System.out.println("\n--------------------------- Tributação da conta ---------------------------");
+        Integer contaEscolhida = null;
+        boolean continuar = false;
+        while ((contaEscolhida == null) || (!continuar)) {
+            try {
+                System.out.println("Escolha uma conta!");
+                mostrasContas();
+                System.out.print("Numero da conta: ");
+                contaEscolhida = sc.nextInt();
+                Conta conta = validaConta(contaEscolhida);
+                if (conta != null) {
+                    continuar = true;
+                    System.out.printf("Total pago: %.2f\n", conta.getTaxasPagasTotal());
+                    System.out.printf("Taxa deposito/saque: %.2f\n", conta.getTaxa());
+                    System.out.printf("Taxa tranferencia: %.2f\n", conta.getTaxaTrans());
+                    System.out.println("---- Detalhes ----");
+                    for (String taxas : conta.getTaxasPagas()){
+                        System.out.println(taxas);
+                    }
+                } else {
+                    System.out.println("Esta conta não existe!\n");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Conta invalida!\n");
             }
         }
     }

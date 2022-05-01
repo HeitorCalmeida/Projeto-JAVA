@@ -11,7 +11,7 @@ public abstract class Conta {
 	protected Double saldo;
 	protected String tipoConta;
 	protected Pessoa pessoa;
-	protected List<Double> taxasPagas = new ArrayList<Double>();
+	protected List<String> taxasPagas = new ArrayList<String>();
 	protected Double taxasPagasTotal;
 	protected Agencia agencia;
 	protected Integer numeroConta;
@@ -42,7 +42,7 @@ public abstract class Conta {
 			if(quantidade > this.taxa){
 				this.saldo += (quantidade - this.taxa);
 				this.taxasPagasTotal = (this.taxasPagasTotal + this.taxa);
-				this.taxasPagas.add(this.taxa);
+				this.taxasPagas.add("Taxa de deposito: " + this.taxa);
 				return true;
 			}
 			return false;
@@ -57,7 +57,7 @@ public abstract class Conta {
 			if (this.saldo >= (quantidade + this.taxa)) {
 				this.saldo = this.saldo - (quantidade + this.taxa);
 				this.taxasPagasTotal = (this.taxasPagasTotal + this.taxa);
-				this.taxasPagas.add(this.taxa);
+				this.taxasPagas.add("Taxa de saque: " + this.taxa);
 				return true;
 			}
 			return false;
@@ -73,7 +73,7 @@ public abstract class Conta {
 				this.saldo = this.saldo - (quantidade + this.taxaTrans);
 				contaDestino.receberTrans(quantidade);
 				this.taxasPagasTotal = (this.taxasPagasTotal + this.taxaTrans);
-				this.taxasPagas.add(this.taxaTrans);
+				this.taxasPagas.add("Taxa de tranferencia: " + this.taxaTrans);
 				return true;
 			}
 			return false;
@@ -95,12 +95,16 @@ public abstract class Conta {
 		return this.taxasPagasTotal;
 	}
 
-	public List<Double> getTaxasPagas() {
+	public List<String> getTaxasPagas() {
 		return this.taxasPagas;
 	}
 
 	public Double getTaxa() {
 		return this.taxa;
+	}
+
+	public Double getTaxaTrans(){
+		return this.taxaTrans;
 	}
 
 	public Integer getNumeroConta(){
