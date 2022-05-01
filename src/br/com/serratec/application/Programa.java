@@ -1,17 +1,9 @@
-package br.com.serratec.application;
-
-import java.util.*;
-
-import br.com.serratec.entidades.Cliente;
-import br.com.serratec.entidades.Diretor;
-import br.com.serratec.entidades.Gerente;
-import br.com.serratec.entidades.Pessoa;
-import br.com.serratec.entidades.Presidente;
 import br.com.serratec.entidadesConta.Conta;
 import br.com.serratec.entidadesConta.ContaCorrente;
 import br.com.serratec.entidadesConta.ContaPoupanca;
 
 import static br.com.serratec.enums.Agencia.*;
+import static java.lang.Thread.sleep;
 
 public class Programa {
 
@@ -21,6 +13,8 @@ public class Programa {
     private static List<Conta> listaContas = new ArrayList<Conta>();
 
     public static void main(String[] args) {
+
+        sc.useLocale(Locale.ENGLISH);
 
         //- Cria os objetos do tipo pessoa e coloca em uma lista -------------------------------------------------------
         Pessoa cl1 = new Cliente("77345678910", "Pedro", "22374");
@@ -55,7 +49,30 @@ public class Programa {
         while (usuario == null) {
             usuario = login();
         }
-        menu();
+        boolean continuar = true;
+        boolean erro = false;
+        do {
+            menu();
+            do{
+                erro = false;
+                try {
+                    System.out.print("\nDeseja sair do sistema (s/n): ");
+                    String c = sc.next();
+                    if(!c.equals("s") && !c.equals("S") && !c.equals("n") && !c.equals("N")){
+                        System.out.println("\nOpção invalida!\nInforme uma opção valida!!!");
+                        erro = true;
+                    }else{
+                        if(c.equals("s") || c.equals("S")){
+                            continuar = false;
+                        }
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("\nOpção invalida!\nInforme uma opção valida!!!");
+                    erro = true;
+                    sc.next();
+                }
+            } while (erro);
+        } while (continuar);
 
         //--------------------------------------------------------------------------------------------------------------
 
@@ -121,7 +138,6 @@ public class Programa {
                 opcoaoEscolhida = sc.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("\nOpção invalida!\nInforme uma opção valida!!!\n");
-                sc.next();
             }
         }
 
@@ -130,7 +146,7 @@ public class Programa {
                 fazerSaque();
                 break;
             case 2:
-                System.out.println("2");
+                fazerDeposito();
                 break;
             case 3:
                 System.out.println("3");
@@ -162,39 +178,123 @@ public class Programa {
 
     }
 
-    private static void fazerSaque(){
-        System.out.println("Escolha uma conta!");
-        for (Conta conta : listaContas) {
-            if (conta.getPessoa() == usuario) {
-                System.out.println("Conta: " + conta.getNumeroConta() + " / Tipo: " + conta.getTipoConta());
-            }
-        }
+    private static void fazerSaque() {
         Integer contaEscolhida = null;
         boolean continuar = false;
+        boolean contaInvalida = true;
         while ((contaEscolhida == null) || (!continuar)) {
-            System.out.print("Numero da conta: ");
             try {
-                contaEscolhida = sc.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("Conta invalida!");
-                sc.next();
-            }
-            if (contaEscolhida != null){
+                System.out.println("Escolha uma conta!");
                 for (Conta conta : listaContas) {
                     if (conta.getPessoa() == usuario) {
-                        if(conta.getNumeroConta().equals(contaEscolhida)){
-                            System.out.println("foi");
+                        System.out.println("Conta: " + conta.getNumeroConta() + " / Tipo: " + conta.getTipoConta());
+                    }
+                }
+                System.out.print("Numero da conta: ");
+                contaEscolhida = sc.nextInt();
+                for (Conta conta : listaContas) {
+                    if (conta.getPessoa() == usuario) {
+                        if (conta.getNumeroConta().equals(contaEscolhida)) {
+                            contaInvalida = false;
                             continuar = true;
+
+                            System.out.println("\nRealizar saque!");
+                            System.out.printf("Saldo: %.2f\n", conta.getSaldo());
+                            if (conta.getSaldo() == 0) {
+                                try {
+                                    System.out.println("Saldo insuficiente para saque!");
+                                    sleep(3000);
+                                } catch (InterruptedException e) {
+                                    continuar = false;
+                                    System.out.println("Aconteceu um erro durante a operação!");
+                                }
+                            } else {
+                                try {
+                                    System.out.print("Valor para saque: ");
+                                    double valorSaque = sc.nextDouble();
+                                    if (conta.saque(valorSaque)) {
+                                        System.out.println("\nSaque realizado com sucesso!");
+                                        System.out.printf("Saldo: %.2f\n", conta.getSaldo());
+                                        System.out.println("Taxa paga: " + conta.getTaxa());
+                                    }else{
+                                        continuar = false;
+                                        System.out.println("Não foi possivel realizar o saque, varifique o valor!\n");
+                                    }
+                                } catch (InputMismatchException e) {
+                                    continuar = false;
+                                    System.out.println("Valor invalido!");
+                                    System.out.println("Informe um valor do tipo double (exemplo: 10.00).");
+                                    sc.next();
+                                }
+                            }
                             break;
                         }
                     }
                 }
 
-                if(!continuar){
+                if (contaInvalida) {
                     System.out.println("Esta conta não existe!");
                 }
+            } catch (InputMismatchException e) {
+                System.out.println("Conta invalida!");
+                sc.next();
             }
-        };
+        }
+    }
+
+    private static void fazerDeposito() {
+        Integer contaEscolhida = null;
+        boolean continuar = false;
+        boolean contaInvalida = true;
+        while ((contaEscolhida == null) || (!continuar)) {
+            try {
+                System.out.println("\nEscolha uma conta!");
+                for (Conta conta : listaContas) {
+                    if (conta.getPessoa() == usuario) {
+                        System.out.println("Conta: " + conta.getNumeroConta() + " / Tipo: " + conta.getTipoConta());
+                    }
+                }
+                System.out.print("Numero da conta: ");
+                contaEscolhida = sc.nextInt();
+                for (Conta conta : listaContas) {
+                    if (conta.getPessoa() == usuario) {
+                        if (conta.getNumeroConta().equals(contaEscolhida)) {
+                            try {
+                                contaInvalida = false;
+                                continuar = true;
+
+                                System.out.println("\nRealizar deposito!");
+                                System.out.printf("Saldo: %.2f\n", conta.getSaldo());
+                                System.out.print("Valor para deposito: ");
+                                Double valorDeposito = sc.nextDouble();
+                                if (conta.deposito(valorDeposito)) {
+                                    System.out.println("\nDeposito realizado com sucesso!");
+                                    System.out.printf("Saldo: %.2f\n", conta.getSaldo());
+                                    System.out.println("Taxa paga: " + conta.getTaxa());
+                                }else{
+                                    System.out.println("\nNão foi possivel realizar o deposito!!");
+                                    System.out.printf("Saldo: %.2f\n", conta.getSaldo());
+                                }
+                            } catch (Exception e) {
+                                System.out.println(e);
+                                continuar = false;
+                                System.out.println("Valor invalido!");
+                                System.out.println("Informe um valor do tipo double (exemplo: 10.00).\n");
+                            }
+                            break;
+                        }
+                    }
+                }
+
+                if (contaInvalida) {
+                    System.out.println("Esta conta não existe!\n");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("\nConta invalida!");
+                sc.next();
+            }
+
+        }
 
     }
 
