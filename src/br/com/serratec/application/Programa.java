@@ -1,3 +1,12 @@
+package br.com.serratec.application;
+
+import java.util.*;
+
+import br.com.serratec.entidades.Cliente;
+import br.com.serratec.entidades.Diretor;
+import br.com.serratec.entidades.Gerente;
+import br.com.serratec.entidades.Pessoa;
+import br.com.serratec.entidades.Presidente;
 import br.com.serratec.entidadesConta.Conta;
 import br.com.serratec.entidadesConta.ContaCorrente;
 import br.com.serratec.entidadesConta.ContaPoupanca;
