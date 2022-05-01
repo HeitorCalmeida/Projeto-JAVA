@@ -170,7 +170,7 @@ public class Programa {
                 mostarTaxas();
                 break;
             case 6:
-                System.out.println("6");
+                rendimentoPoupanca();
                 break;
             default:
                 System.out.println("Looking forward to the Weekend");
@@ -344,6 +344,19 @@ public class Programa {
         return null;
     }
 
+    private static Conta validaContaPoupanca(Integer conta) {
+        for (Conta contas : listaContas) {
+            if (contas.getPessoa() == usuario) {
+                if (contas.getTipoConta().equals("Poupança")) {
+                    if (contas.getNumeroConta().equals(conta)) {
+                        return contas;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     private static Conta validaContaDestino(Integer conta) {
         for (Conta contas : listaContas) {
             if (contas.getPessoa() != usuario) {
@@ -359,6 +372,16 @@ public class Programa {
         for (Conta conta : listaContas) {
             if (conta.getPessoa() == usuario) {
                 System.out.println("Conta: " + conta.getNumeroConta() + " / Tipo: " + conta.getTipoConta());
+            }
+        }
+    }
+
+    private static void mostrasContasPoupanca() {
+        for (Conta conta : listaContas) {
+            if (conta.getPessoa() == usuario) {
+                if (conta.getTipoConta().equals("Poupança")) {
+                    System.out.println("Conta: " + conta.getNumeroConta() + " / Tipo: " + conta.getTipoConta());
+                }
             }
         }
     }
@@ -386,7 +409,7 @@ public class Programa {
         }
     }
 
-    private static void mostarTaxas(){
+    private static void mostarTaxas() {
         System.out.println("\n--------------------------- Tributação da conta ---------------------------");
         Integer contaEscolhida = null;
         boolean continuar = false;
@@ -403,8 +426,43 @@ public class Programa {
                     System.out.printf("Taxa deposito/saque: %.2f\n", conta.getTaxa());
                     System.out.printf("Taxa tranferencia: %.2f\n", conta.getTaxaTrans());
                     System.out.println("---- Detalhes ----");
-                    for (String taxas : conta.getTaxasPagas()){
+                    for (String taxas : conta.getTaxasPagas()) {
                         System.out.println(taxas);
+                    }
+                } else {
+                    System.out.println("Esta conta não existe!\n");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Conta invalida!\n");
+            }
+        }
+    }
+
+    private static void rendimentoPoupanca() {
+        System.out.println("\n--------------------------- Rendimento da poupança ---------------------------");
+        Integer contaEscolhida = null;
+        boolean continuar = false;
+        while ((contaEscolhida == null) || (!continuar)) {
+            try {
+                System.out.println("Escolha uma conta!");
+                mostrasContasPoupanca();
+                System.out.print("Numero da conta: ");
+                contaEscolhida = sc.nextInt();
+                Conta conta = validaContaPoupanca(contaEscolhida);
+                if (conta != null) {
+                    ContaPoupanca cp = (ContaPoupanca) conta;
+                    System.out.print("Informe o valor inicial: ");
+                    Double valorInicial = sc.nextDouble();
+                    System.out.print("Informe o numero de dias para o rendimento: ");
+                    Integer dias = sc.nextInt();
+
+                    if(valorInicial != 0 & dias != 0){
+                        continuar = true;
+                        System.out.printf("\nValor inicia: %.2f\n", valorInicial);
+                        System.out.printf("Dias: %d\n", dias);
+                        System.out.printf("Rendimento: %f\n", cp.simularRendimento(valorInicial, dias));
+                    }else{
+                        System.out.println("Não foi possivel simular o rendimento\n");
                     }
                 } else {
                     System.out.println("Esta conta não existe!\n");
