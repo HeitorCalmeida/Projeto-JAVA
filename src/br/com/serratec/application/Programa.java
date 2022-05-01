@@ -64,7 +64,7 @@ public class Programa {
         boolean continuar = true;
         boolean erro = false;
         do {
-            menu();
+            menuGeral();
             //- Verifica se deseja sair do sistema ---------------------------------------------------------------------
             do {
                 erro = false;
@@ -117,7 +117,7 @@ public class Programa {
         return null;
     }
 
-    private static void menu() {
+    private static void menuGeral() {
         String opt = "" +
                 "\n------------------- Escolha a operação desejada ------------------- " +
                 "\n1 - Saque" +
@@ -126,17 +126,20 @@ public class Programa {
                 "\n4 - Saldo" +
                 "\n5 - Tributação da conta" +
                 "\n6 - Rendimento da poupança";
-        if (usuario.getTipo() == 1) {
-            menuCliente((Cliente) usuario, opt);
-        }
-        if (usuario.getTipo() == 2) {
-            menuGerente((Gerente) usuario, opt);
-        }
-        if (usuario.getTipo() == 3) {
-            menuDiretor((Diretor) usuario, opt);
-        }
-        if (usuario.getTipo() == 4) {
-            menuPresidente((Presidente) usuario, opt);
+
+        switch (usuario.getTipo()) {
+            case 1:
+                menuCliente((Cliente) usuario, opt);
+                break;
+            case 2:
+                menuGerente((Gerente) usuario, opt);
+                break;
+            case 3:
+                menuDiretor((Diretor) usuario, opt);
+                break;
+            case 4:
+                menuPresidente((Presidente) usuario, opt);
+                break;
         }
     }
 
@@ -173,12 +176,52 @@ public class Programa {
                 rendimentoPoupanca();
                 break;
             default:
-                System.out.println("Looking forward to the Weekend");
+                System.out.print("Opção invalida");
+                System.exit(1);
         }
     }
 
     private static void menuGerente(Gerente gerente, String opt) {
+        opt = opt + "" +
+                "\n7 - Contas na sua agencia";
+        System.out.println(opt);
+        Integer opcoaoEscolhida = null;
+        while (opcoaoEscolhida == null) {
+            System.out.print("Digite a opção desejada: ");
+            try {
+                opcoaoEscolhida = sc.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("\nOpção invalida!\nInforme uma opção valida!!!\n");
+            }
+        }
+        System.out.println("\n");
 
+        switch (opcoaoEscolhida) {
+            case 1:
+                fazerSaque();
+                break;
+            case 2:
+                fazerDeposito();
+                break;
+            case 3:
+                fazerTransferencia();
+                break;
+            case 4:
+                mostarSaldo();
+                break;
+            case 5:
+                mostarTaxas();
+                break;
+            case 6:
+                rendimentoPoupanca();
+                break;
+            case 7:
+                mostrasContasNaAgencia(gerente);
+                break;
+            default:
+                System.out.print("Opção invalida");
+                System.exit(1);
+        }
     }
 
     private static void menuDiretor(Diretor diretor, String opt) {
@@ -382,6 +425,16 @@ public class Programa {
                 if (conta.getTipoConta().equals("Poupança")) {
                     System.out.println("Conta: " + conta.getNumeroConta() + " / Tipo: " + conta.getTipoConta());
                 }
+            }
+        }
+    }
+
+    private static void mostrasContasNaAgencia(Gerente gerente) {
+        System.out.println("\n--------------------------- Clientes na sua agencia ---------------------------");
+        System.out.println("Clientes: ");
+        for (Conta conta : listaContas) {
+            if (conta.getAgencia() == gerente.getAgencia()) {
+                System.out.println("Conta: " + conta.getNumeroConta() + " / Tipo: " + conta.getTipoConta() + " / Dono: " + conta.getPessoa().getNome());
             }
         }
     }

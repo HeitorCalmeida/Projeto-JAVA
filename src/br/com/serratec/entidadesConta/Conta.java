@@ -111,6 +111,10 @@ public abstract class Conta {
 		return this.numeroConta;
 	}
 
+	public Agencia getAgencia(){
+		return this.agencia;
+	}
+
 	@Override
 	public String toString() {
 		return "Dono da Conta:\n" + this.pessoa + "\nSALDO: " + this.saldo + "\nTIPO: " + this.tipoConta + "\nNUMERO DA CONTA: " + this.numeroConta;
