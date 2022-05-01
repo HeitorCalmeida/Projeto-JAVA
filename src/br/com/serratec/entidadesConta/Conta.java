@@ -3,122 +3,156 @@ package br.com.serratec.entidadesConta;
 import br.com.serratec.entidades.Pessoa;
 import br.com.serratec.enums.Agencia;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Conta{
+public abstract class Conta {
 
-	protected Double saldo;
-	protected String tipoConta;
-	protected Pessoa pessoa;
-	protected List<String> taxasPagas = new ArrayList<String>();
-	protected Double taxasPagasTotal;
-	protected Agencia agencia;
-	protected Integer numeroConta;
-	protected Double taxa;
-	protected Double taxaTrans;
+    protected Double saldo;
+    protected String tipoConta;
+    protected Pessoa pessoa;
+    protected List<String> taxasPagas = new ArrayList<String>();
+    protected Double taxasPagasTotal;
+    protected Agencia agencia;
+    protected Integer numeroConta;
+    protected Double taxa;
+    protected Double taxaTrans;
 
-	public Conta(Pessoa pessoa,Agencia agencia) {
-		this.pessoa = pessoa;
-		this.agencia = agencia;
-		this.saldo = 0.00;
-		this.taxasPagasTotal = 0.00;
-		this.taxa = 0.10;
-		this.taxaTrans = 0.20;
-		this.numeroConta = (int)Math.floor(Math.random()*(999999999-1+1)+0);
+    public Conta(Pessoa pessoa, Agencia agencia) {
+        this.pessoa = pessoa;
+        this.agencia = agencia;
+        this.saldo = 0.00;
+        this.taxasPagasTotal = 0.00;
+        this.taxa = 0.10;
+        this.taxaTrans = 0.20;
+        this.numeroConta = (int) Math.floor(Math.random() * (999999999 - 1 + 1) + 0);
 
-	}
+    }
 
-	public Double getSaldo() {
-		return this.saldo;
-	}
+    public Double getSaldo() {
+        return this.saldo;
+    }
 
-	public void receberTrans(Double quantidade){
-		this.saldo = this.saldo + quantidade;
-	}
+    public void receberTrans(Double quantidade) {
+        this.saldo = this.saldo + quantidade;
+    }
 
-	public Boolean deposito(Double quantidade) {
-		try{
-			if(quantidade > this.taxa){
-				this.saldo += (quantidade - this.taxa);
-				this.taxasPagasTotal = (this.taxasPagasTotal + this.taxa);
-				this.taxasPagas.add("Taxa de deposito: " + this.taxa);
-				return true;
-			}
-			return false;
-		}catch (Exception e){
-			System.out.println(e);
-			return false;
-		}
-	}
+    public Boolean deposito(Double quantidade) {
+        try {
+            if (quantidade > this.taxa) {
+                this.saldo += (quantidade - this.taxa);
+                this.taxasPagasTotal = (this.taxasPagasTotal + this.taxa);
+                this.taxasPagas.add("Taxa de deposito: " + this.taxa);
+                salvarOperacao("Deposito", quantidade, this.taxa);
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+    }
 
-	public Boolean saque(Double quantidade) {
-		try{
-			if (this.saldo >= (quantidade + this.taxa)) {
-				this.saldo = this.saldo - (quantidade + this.taxa);
-				this.taxasPagasTotal = (this.taxasPagasTotal + this.taxa);
-				this.taxasPagas.add("Taxa de saque: " + this.taxa);
-				return true;
-			}
-			return false;
-		}catch (Exception e){
-			return false;
-		}
+    public Boolean saque(Double quantidade) {
+        try {
+            if (this.saldo >= (quantidade + this.taxa)) {
+                this.saldo = this.saldo - (quantidade + this.taxa);
+                this.taxasPagasTotal = (this.taxasPagasTotal + this.taxa);
+                this.taxasPagas.add("Taxa de saque: " + this.taxa);
+                salvarOperacao("Saque", quantidade, this.taxa);
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
 
-	}
+    }
 
-	public Boolean transferencia(Double quantidade, Conta contaDestino) {
-		try{
-			if (this.saldo >= (quantidade + this.taxaTrans)) {
-				this.saldo = this.saldo - (quantidade + this.taxaTrans);
-				contaDestino.receberTrans(quantidade);
-				this.taxasPagasTotal = (this.taxasPagasTotal + this.taxaTrans);
-				this.taxasPagas.add("Taxa de tranferencia: " + this.taxaTrans);
-				return true;
-			}
-			return false;
-		}catch (Exception e){
-			return false;
-		}
+    public Boolean transferencia(Double quantidade, Conta contaDestino) {
+        try {
+            if (this.saldo >= (quantidade + this.taxaTrans)) {
+                this.saldo = this.saldo - (quantidade + this.taxaTrans);
+                contaDestino.receberTrans(quantidade);
+                this.taxasPagasTotal = (this.taxasPagasTotal + this.taxaTrans);
+                this.taxasPagas.add("Taxa de tranferencia: " + this.taxaTrans);
+                salvarOperacao("Tranferencia", quantidade, this.taxaTrans);
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
 
-	}
+    }
 
-	public String getTipoConta() {
-		return this.tipoConta;
-	}
+    public String getTipoConta() {
+        return this.tipoConta;
+    }
 
-	public Pessoa getPessoa() {
-		return this.pessoa;
-	}
-	
-	public Double getTaxasPagasTotal() {
-		return this.taxasPagasTotal;
-	}
+    public Pessoa getPessoa() {
+        return this.pessoa;
+    }
 
-	public List<String> getTaxasPagas() {
-		return this.taxasPagas;
-	}
+    public Double getTaxasPagasTotal() {
+        return this.taxasPagasTotal;
+    }
 
-	public Double getTaxa() {
-		return this.taxa;
-	}
+    public List<String> getTaxasPagas() {
+        return this.taxasPagas;
+    }
 
-	public Double getTaxaTrans(){
-		return this.taxaTrans;
-	}
+    public Double getTaxa() {
+        return this.taxa;
+    }
 
-	public Integer getNumeroConta(){
-		return this.numeroConta;
-	}
+    public Double getTaxaTrans() {
+        return this.taxaTrans;
+    }
 
-	public Agencia getAgencia(){
-		return this.agencia;
-	}
+    public Integer getNumeroConta() {
+        return this.numeroConta;
+    }
 
-	@Override
-	public String toString() {
-		return "Dono da Conta:\n" + this.pessoa + "\nSALDO: " + this.saldo + "\nTIPO: " + this.tipoConta + "\nNUMERO DA CONTA: " + this.numeroConta;
+    public Agencia getAgencia() {
+        return this.agencia;
+    }
 
-	}
+    @Override
+    public String toString() {
+        return "Dono da Conta:\n" + this.pessoa + "\nSALDO: " + this.saldo + "\nTIPO: " + this.tipoConta + "\nNUMERO DA CONTA: " + this.numeroConta;
+
+    }
+
+    private void salvarOperacao(String tipo, Double valor, Double taxa) {
+        System.out.println("Salvando operação...");
+        File arquivo = new File("operacoes.csv");
+        if (!arquivo.exists()) {
+            try {
+                arquivo.createNewFile();
+            } catch (IOException e) {
+                System.out.println("Ocorreu um erro durante a criação do arquivo");
+            }
+        }
+
+        try {
+            FileWriter escritorArquivo = new FileWriter(arquivo, true);
+            BufferedWriter escritorBffArquivo = new BufferedWriter(escritorArquivo);
+
+            escritorBffArquivo.write(tipo + ", " + valor + ", " + taxa + ", " + this.getNumeroConta() + ", " + this.getPessoa().getNome());
+            escritorBffArquivo.newLine();
+
+            escritorBffArquivo.flush();
+            escritorBffArquivo.close();
+            escritorArquivo.close();
+            System.out.println("Operação salva!!!");
+        } catch (IOException e) {
+            System.out.println("Ocorreu um erro durante a escrita do arquivo");
+        }
+    }
 
 }
