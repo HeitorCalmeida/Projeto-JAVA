@@ -9,7 +9,7 @@ public class ContaPoupanca extends Conta{
 		public ContaPoupanca(Pessoa pessoa,Agencia agencia, double rendimento) {
 			super(pessoa,agencia);
 			this.rendimento = rendimento;
-			this.tipoConta = "Conta-Poupança";
+			this.tipoConta = "Poupança";
 		}
 
 		public double getRendimento() {

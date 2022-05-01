@@ -10,7 +10,7 @@ public class ContaCorrente extends Conta {
     public ContaCorrente(Pessoa pessoa, Agencia agencia, double limiteEmprestimo) {
         super(pessoa, agencia);
         this.limiteEmprestimo = limiteEmprestimo;
-        this.tipoConta = "Conta-Corrente";
+        this.tipoConta = "Corrente";
     }
 
     public double getLimiteEmprestimo() {

@@ -10,10 +10,12 @@ public abstract class Conta {
 	protected Pessoa pessoa;
 	protected double valorTributo;
 	protected Agencia agencia;
+	protected Integer numeroConta;
 
 	public Conta(Pessoa pessoa,Agencia agencia) {
 		this.pessoa = pessoa;
 		this.agencia = agencia;
+		this.numeroConta = (int)Math.floor(Math.random()*(999999999-1+1)+0);
 
 	}
 
@@ -46,9 +48,13 @@ public abstract class Conta {
 		return valorTributo;
 	}
 
+	public Integer getNumeroConta(){
+		return numeroConta;
+	}
+
 	@Override
 	public String toString() {
-		return "Dono da Conta:\n" + pessoa + "\nSALDO: " + saldo + "\nTIPO: " + tipoConta;
+		return "Dono da Conta:\n" + pessoa + "\nSALDO: " + saldo + "\nTIPO: " + tipoConta + "\nNUMERO DA CONTA: " + numeroConta;
 
 	}
 }
