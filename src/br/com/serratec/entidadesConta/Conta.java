@@ -3,37 +3,62 @@ package br.com.serratec.entidadesConta;
 import br.com.serratec.entidades.Pessoa;
 import br.com.serratec.enums.Agencia;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Conta {
 
-	protected double saldo;
+	protected Double saldo;
 	protected String tipoConta;
 	protected Pessoa pessoa;
-	protected double valorTributo;
+	protected List<Double> taxasPagas = new ArrayList<Double>();
+	protected Double taxasPagasTotal;
 	protected Agencia agencia;
 	protected Integer numeroConta;
+	protected Double taxa;
 
 	public Conta(Pessoa pessoa,Agencia agencia) {
 		this.pessoa = pessoa;
 		this.agencia = agencia;
+		this.saldo = 0.00;
+		this.taxasPagasTotal = 0.00;
+		this.taxa = 0.10;
 		this.numeroConta = (int)Math.floor(Math.random()*(999999999-1+1)+0);
 
 	}
 
-	public double getSaldo() {
+	public Double getSaldo() {
 		return saldo;
 	}
 
-	public void deposito(double quantidade) {
-		this.saldo += quantidade;
-		this.saldo -= 00.10;
-		this.valorTributo += 00.10;
+	public Boolean deposito(Double quantidade) {
+		try{
+			if(quantidade > this.taxa){
+				this.saldo += (quantidade - this.taxa);
+				this.taxasPagasTotal = (this.taxasPagasTotal + this.taxa);
+				this.taxasPagas.add(this.taxa);
+				return true;
+			}
+			return false;
+		}catch (Exception e){
+			System.out.println(e);
+			return false;
+		}
 	}
 
-	public void saque(double quantidade) {
-		if (this.saldo >= (quantidade + 00.10)) {
-			this.saldo -= (quantidade + 00.10);
-			this.valorTributo += 00.10;
+	public Boolean saque(Double quantidade) {
+		try{
+			if (this.saldo >= (quantidade + this.taxa)) {
+				this.saldo = this.saldo - (quantidade + this.taxa);
+				this.taxasPagasTotal = (this.taxasPagasTotal + this.taxa);
+				this.taxasPagas.add(this.taxa);
+				return true;
+			}
+			return false;
+		}catch (Exception e){
+			return false;
 		}
+
 	}
 
 	public String getTipoConta() {
@@ -44,8 +69,16 @@ public abstract class Conta {
 		return pessoa;
 	}
 	
-	public double getValorTributo() {
-		return valorTributo;
+	public Double getTaxasPagasTotal() {
+		return taxasPagasTotal;
+	}
+
+	public List<Double> getTaxasPagas() {
+		return taxasPagas;
+	}
+
+	public Double getTaxa() {
+		return taxa;
 	}
 
 	public Integer getNumeroConta(){
