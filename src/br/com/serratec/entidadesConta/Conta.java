@@ -16,6 +16,7 @@ public abstract class Conta {
 	protected Agencia agencia;
 	protected Integer numeroConta;
 	protected Double taxa;
+	protected Double taxaTrans;
 
 	public Conta(Pessoa pessoa,Agencia agencia) {
 		this.pessoa = pessoa;
@@ -23,12 +24,17 @@ public abstract class Conta {
 		this.saldo = 0.00;
 		this.taxasPagasTotal = 0.00;
 		this.taxa = 0.10;
+		this.taxaTrans = 0.20;
 		this.numeroConta = (int)Math.floor(Math.random()*(999999999-1+1)+0);
 
 	}
 
 	public Double getSaldo() {
-		return saldo;
+		return this.saldo;
+	}
+
+	public void receberTrans(Double quantidade){
+		this.saldo = this.saldo + quantidade;
 	}
 
 	public Boolean deposito(Double quantidade) {
@@ -61,33 +67,49 @@ public abstract class Conta {
 
 	}
 
+	public Boolean transferencia(Double quantidade, Conta contaDestino) {
+		try{
+			if (this.saldo >= (quantidade + this.taxaTrans)) {
+				this.saldo = this.saldo - (quantidade + this.taxaTrans);
+				contaDestino.receberTrans(quantidade);
+				this.taxasPagasTotal = (this.taxasPagasTotal + this.taxaTrans);
+				this.taxasPagas.add(this.taxaTrans);
+				return true;
+			}
+			return false;
+		}catch (Exception e){
+			return false;
+		}
+
+	}
+
 	public String getTipoConta() {
-		return tipoConta;
+		return this.tipoConta;
 	}
 
 	public Pessoa getPessoa() {
-		return pessoa;
+		return this.pessoa;
 	}
 	
 	public Double getTaxasPagasTotal() {
-		return taxasPagasTotal;
+		return this.taxasPagasTotal;
 	}
 
 	public List<Double> getTaxasPagas() {
-		return taxasPagas;
+		return this.taxasPagas;
 	}
 
 	public Double getTaxa() {
-		return taxa;
+		return this.taxa;
 	}
 
 	public Integer getNumeroConta(){
-		return numeroConta;
+		return this.numeroConta;
 	}
 
 	@Override
 	public String toString() {
-		return "Dono da Conta:\n" + pessoa + "\nSALDO: " + saldo + "\nTIPO: " + tipoConta + "\nNUMERO DA CONTA: " + numeroConta;
+		return "Dono da Conta:\n" + this.pessoa + "\nSALDO: " + this.saldo + "\nTIPO: " + this.tipoConta + "\nNUMERO DA CONTA: " + this.numeroConta;
 
 	}
 }
