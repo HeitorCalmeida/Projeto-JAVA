@@ -10,6 +10,7 @@ import br.com.serratec.entidades.Presidente;
 import br.com.serratec.entidadesConta.Conta;
 import br.com.serratec.entidadesConta.ContaCorrente;
 import br.com.serratec.entidadesConta.ContaPoupanca;
+import br.com.serratec.enums.Agencia;
 
 import static br.com.serratec.enums.Agencia.*;
 import static java.lang.Thread.sleep;
@@ -51,6 +52,7 @@ public class Programa {
         listaPessoas.add(pres1);
         listaContas.add(new ContaPoupanca(pres1, A001, 0.15));
         listaContas.add(new ContaCorrente(pres1, A002, 7000.00));
+
         //--------------------------------------------------------------------------------------------------------------
 
 
@@ -120,6 +122,7 @@ public class Programa {
     private static void menuGeral() {
         String opt = "" +
                 "\n------------------- Escolha a operação desejada ------------------- " +
+                "\n0 - Sair" +
                 "\n1 - Saque" +
                 "\n2 - Depósito" +
                 "\n3 - Transferência" +
@@ -157,6 +160,9 @@ public class Programa {
         System.out.println("\n");
 
         switch (opcoaoEscolhida) {
+            case 0:
+                System.exit(1);
+                break;
             case 1:
                 fazerSaque();
                 break;
@@ -197,6 +203,9 @@ public class Programa {
         System.out.println("\n");
 
         switch (opcoaoEscolhida) {
+            case 0:
+                System.exit(1);
+                break;
             case 1:
                 fazerSaque();
                 break;
@@ -216,7 +225,7 @@ public class Programa {
                 rendimentoPoupanca();
                 break;
             case 7:
-                mostrasContasNaAgencia(gerente);
+                mostrarContasNaAgenciaGerente(gerente);
                 break;
             default:
                 System.out.print("Opção invalida");
@@ -225,12 +234,107 @@ public class Programa {
     }
 
     private static void menuDiretor(Diretor diretor, String opt) {
-        opt = opt + "\n04 - Diretor";
+        opt = opt + "" +
+                "\n7 - Contas por agencia" +
+                "\n8 - Lista de clientes";
         System.out.println(opt);
+        Integer opcoaoEscolhida = null;
+        while (opcoaoEscolhida == null) {
+            System.out.print("Digite a opção desejada: ");
+            try {
+                opcoaoEscolhida = sc.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("\nOpção invalida!\nInforme uma opção valida!!!\n");
+            }
+        }
+        System.out.println("\n");
+
+        switch (opcoaoEscolhida) {
+            case 0:
+                System.exit(1);
+                break;
+            case 1:
+                fazerSaque();
+                break;
+            case 2:
+                fazerDeposito();
+                break;
+            case 3:
+                fazerTransferencia();
+                break;
+            case 4:
+                mostarSaldo();
+                break;
+            case 5:
+                mostarTaxas();
+                break;
+            case 6:
+                rendimentoPoupanca();
+                break;
+            case 7:
+                mostrarContasNaAgencia();
+                break;
+            case 8:
+                mostrasTodasContas();
+                break;
+            default:
+                System.out.print("Opção invalida");
+                System.exit(1);
+        }
     }
 
     private static void menuPresidente(Presidente presidente, String opt) {
+        opt = opt + "" +
+                "\n7 - Contas por agencia" +
+                "\n8 - Lista de clientes" +
+                "\n9 - Total no banco";
+        System.out.println(opt);
+        Integer opcoaoEscolhida = null;
+        while (opcoaoEscolhida == null) {
+            System.out.print("Digite a opção desejada: ");
+            try {
+                opcoaoEscolhida = sc.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("\nOpção invalida!\nInforme uma opção valida!!!\n");
+            }
+        }
+        System.out.println("\n");
 
+        switch (opcoaoEscolhida) {
+            case 0:
+                System.exit(1);
+                break;
+            case 1:
+                fazerSaque();
+                break;
+            case 2:
+                fazerDeposito();
+                break;
+            case 3:
+                fazerTransferencia();
+                break;
+            case 4:
+                mostarSaldo();
+                break;
+            case 5:
+                mostarTaxas();
+                break;
+            case 6:
+                rendimentoPoupanca();
+                break;
+            case 7:
+                mostrarContasNaAgencia();
+                break;
+            case 8:
+                mostrasTodasContas();
+                break;
+            case 9:
+                totalNoBanco();
+                break;
+            default:
+                System.out.print("Opção invalida");
+                System.exit(1);
+        }
     }
 
     private static void fazerSaque() {
@@ -411,11 +515,34 @@ public class Programa {
         return null;
     }
 
+    private static Agencia validaAgencia(String agencia) {
+        for (Agencia a : Agencia.values()) {
+            if (Objects.equals(a.toString(), agencia)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
     private static void mostrasContas() {
         for (Conta conta : listaContas) {
             if (conta.getPessoa() == usuario) {
                 System.out.println("Conta: " + conta.getNumeroConta() + " / Tipo: " + conta.getTipoConta());
             }
+        }
+    }
+
+    private static void mostrasTodasContas() {
+        System.out.println("\n--------------------------- Lista de clientes ---------------------------");
+        listaContas.sort(new Comparator<Conta>() {
+            @Override
+            public int compare(Conta u1, Conta u2) {
+                return u1.getPessoa().getNome().compareTo(u2.getPessoa().getNome());
+            }
+        });
+        System.out.println("Clientes:");
+        for (Conta conta : listaContas) {
+            System.out.println("Dono: " + conta.getPessoa().getNome() + " / Cpf: " + conta.getPessoa().getCpf() + " / Conta: " + conta.getNumeroConta() + " / Tipo: " + conta.getTipoConta() + " / Agencia: " + conta.getAgencia().toString());
         }
     }
 
@@ -429,12 +556,38 @@ public class Programa {
         }
     }
 
-    private static void mostrasContasNaAgencia(Gerente gerente) {
+    private static void mostrarContasNaAgenciaGerente(Gerente gerente) {
         System.out.println("\n--------------------------- Clientes na sua agencia ---------------------------");
         System.out.println("Clientes: ");
         for (Conta conta : listaContas) {
             if (conta.getAgencia() == gerente.getAgencia()) {
                 System.out.println("Conta: " + conta.getNumeroConta() + " / Tipo: " + conta.getTipoConta() + " / Dono: " + conta.getPessoa().getNome());
+            }
+        }
+    }
+
+    private static void mostrarContasNaAgencia() {
+        System.out.println("\n--------------------------- Clientes por agencia ---------------------------");
+        boolean con = false;
+        while (!con) {
+            try {
+                System.out.println("Agencias: ");
+                System.out.println(Arrays.asList(Agencia.values()));
+                System.out.println("Informe a agencia: ");
+                String agencia = sc.next();
+                Agencia a = validaAgencia(agencia);
+                if (a != null) {
+                    con = true;
+                    for (Conta conta : listaContas) {
+                        if (conta.getAgencia() == a) {
+                            System.out.println("Conta: " + conta.getNumeroConta() + " / Tipo: " + conta.getTipoConta() + " / Dono: " + conta.getPessoa().getNome());
+                        }
+                    }
+                } else {
+                    System.out.println("Esta agencia não existe!\n");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Agencia invalida!\n");
             }
         }
     }
@@ -509,12 +662,12 @@ public class Programa {
                     System.out.print("Informe o numero de dias para o rendimento: ");
                     Integer dias = sc.nextInt();
 
-                    if(valorInicial != 0 & dias != 0){
+                    if (valorInicial != 0 & dias != 0) {
                         continuar = true;
                         System.out.printf("\nValor inicia: %.2f\n", valorInicial);
                         System.out.printf("Dias: %d\n", dias);
                         System.out.printf("Rendimento: %f\n", cp.simularRendimento(valorInicial, dias));
-                    }else{
+                    } else {
                         System.out.println("Não foi possivel simular o rendimento\n");
                     }
                 } else {
@@ -524,6 +677,17 @@ public class Programa {
                 System.out.println("Conta invalida!\n");
             }
         }
+    }
+
+    private static void totalNoBanco(){
+        System.out.println("\n--------------------------- Total no banco ---------------------------");
+        System.out.println("Usuarios:");
+        double total = 0.0;
+        for(Conta conta : listaContas){
+            total = total + conta.getSaldo();
+            System.out.printf("%s: %f\n", conta.getPessoa().getNome(), conta.getSaldo());
+        }
+        System.out.printf("\nTotal no banco: %f", total);
     }
 
 }

@@ -6,7 +6,7 @@ import br.com.serratec.enums.Agencia;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Conta {
+public abstract class Conta{
 
 	protected Double saldo;
 	protected String tipoConta;
@@ -120,4 +120,5 @@ public abstract class Conta {
 		return "Dono da Conta:\n" + this.pessoa + "\nSALDO: " + this.saldo + "\nTIPO: " + this.tipoConta + "\nNUMERO DA CONTA: " + this.numeroConta;
 
 	}
+
 }
