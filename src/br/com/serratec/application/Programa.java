@@ -666,10 +666,10 @@ public class Programa {
 
                     if (valorInicial != 0 & dias != 0) {
                         continuar = true;
-                        System.out.printf("\nValor inicia: %.2f\n", valorInicial);
+                        System.out.printf("\nValor inicial: %.2f\n", valorInicial);
                         System.out.printf("Dias: %d\n", dias);
                         Double valorFinal = cp.simularRendimento(valorInicial, dias);
-                        System.out.printf("Rendimento: %f\n", valorFinal);
+                        System.out.printf("Rendimento: %.2f\n", valorFinal);
                         Arquivos.salvarRelatorioSimulacao("--------------------------- Rendimento da poupança ---------------------------", valorInicial, dias, valorFinal);
                     } else {
                         System.out.println("Não foi possivel simular o rendimento\n");
