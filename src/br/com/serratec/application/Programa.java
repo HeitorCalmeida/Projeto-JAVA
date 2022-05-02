@@ -714,7 +714,7 @@ public class Programa {
 		double total = 0.0;
 		for (Conta conta : listaContas) {
 			total = total + conta.getSaldo();
-			System.out.printf("%s: %f\n", conta.getPessoa().getNome(), conta.getSaldo());
+			System.out.printf("%s: %.2f\n", conta.getPessoa().getNome(), conta.getSaldo());
 		}
 		System.out.printf("\nTotal no banco: %f\n", total);
 
