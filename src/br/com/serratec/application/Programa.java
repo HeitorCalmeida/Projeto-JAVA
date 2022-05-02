@@ -26,28 +26,42 @@ public class Programa {
         Pessoa cl1 = new Cliente("77345678910", "Pedro", "22374");
         listaPessoas.add(cl1);
         listaContas.add(new ContaPoupanca(cl1, A001, 0.15));
-        listaContas.add(new ContaCorrente(cl1, A002, 7000.00));
-
-        Pessoa dir1 = new Diretor("13128451550", "Gabriel", "12345");
-        listaPessoas.add(dir1);
-        listaContas.add(new ContaPoupanca(dir1, A001, 0.15));
-        listaContas.add(new ContaCorrente(dir1, A002, 7000.00));
-
-        Pessoa dir2 = new Diretor("06445419155", "Leticia", "917775");
-        listaPessoas.add(dir2);
-        listaContas.add(new ContaPoupanca(dir2, A001, 0.15));
-        listaContas.add(new ContaCorrente(dir2, A002, 7000.00));
+        listaContas.add(new ContaCorrente(cl1, A001, 7000.00));
+        
+        Pessoa cl2 = new Cliente("59468752136", "Marcos", "55669");
+        listaPessoas.add(cl2);
+        listaContas.add(new ContaPoupanca(cl2, A002, 0.15));
+        listaContas.add(new ContaCorrente(cl2, A002, 7000.00));
+        
+        Pessoa cl3 = new Cliente("78513264591", "Mylena", "56321");
+        listaPessoas.add(cl3);
+        listaContas.add(new ContaPoupanca(cl3, A003, 0.15));
+        listaContas.add(new ContaCorrente(cl3, A003, 7000.00));
 
         Pessoa ger1 = new Gerente("90345678910", "Amanda", "892374", A001);
         listaPessoas.add(ger1);
         listaContas.add(new ContaPoupanca(ger1, A001, 0.15));
-        listaContas.add(new ContaCorrente(ger1, A002, 7000.00));
+        listaContas.add(new ContaCorrente(ger1, A001, 7000.00));
+        
+        Pessoa ger2 = new Gerente("13128451550", "Gabriel", "12345", A002);
+        listaPessoas.add(ger2);
+        listaContas.add(new ContaPoupanca(ger2, A002, 0.15));
+        listaContas.add(new ContaCorrente(ger2, A002, 7000.00));
+        
+        Pessoa ger3 = new Gerente("51263498632", "Lucas", "vihuchi", A003);
+        listaPessoas.add(ger3);
+        listaContas.add(new ContaPoupanca(ger3, A003, 0.15));
+        listaContas.add(new ContaCorrente(ger3, A003, 7000.00));
 
+        Pessoa dir2 = new Diretor("06445419155", "Leticia", "917775");
+        listaPessoas.add(dir2);
+        listaContas.add(new ContaPoupanca(dir2, A002, 0.15));
+        listaContas.add(new ContaCorrente(dir2, A002, 7000.00));
 
         Pessoa pres1 = new Presidente("00345678910", "Heitor", "00374");
         listaPessoas.add(pres1);
         listaContas.add(new ContaPoupanca(pres1, A001, 0.15));
-        listaContas.add(new ContaCorrente(pres1, A002, 7000.00));
+        listaContas.add(new ContaCorrente(pres1, A001, 7000.00));
 
         //--------------------------------------------------------------------------------------------------------------
 
