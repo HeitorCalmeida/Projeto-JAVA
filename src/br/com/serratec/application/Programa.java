@@ -2,11 +2,7 @@ package br.com.serratec.application;
 
 import java.util.*;
 
-import br.com.serratec.entidades.Cliente;
-import br.com.serratec.entidades.Diretor;
-import br.com.serratec.entidades.Gerente;
-import br.com.serratec.entidades.Pessoa;
-import br.com.serratec.entidades.Presidente;
+import br.com.serratec.entidades.*;
 import br.com.serratec.entidadesConta.Conta;
 import br.com.serratec.entidadesConta.ContaCorrente;
 import br.com.serratec.entidadesConta.ContaPoupanca;
@@ -544,6 +540,8 @@ public class Programa {
         for (Conta conta : listaContas) {
             System.out.println("Dono: " + conta.getPessoa().getNome() + " / Cpf: " + conta.getPessoa().getCpf() + " / Conta: " + conta.getNumeroConta() + " / Tipo: " + conta.getTipoConta() + " / Agencia: " + conta.getAgencia().toString());
         }
+
+        Arquivos.salvarRelatorioTotalClientes("--------------------------- Lista de clientes ---------------------------", listaContas);
     }
 
     private static void mostrasContasPoupanca() {
@@ -564,6 +562,7 @@ public class Programa {
                 System.out.println("Conta: " + conta.getNumeroConta() + " / Tipo: " + conta.getTipoConta() + " / Dono: " + conta.getPessoa().getNome());
             }
         }
+        Arquivos.salvarRelatorioClientesAgenciaGerente("--------------------------- Clientes na sua agencia ---------------------------", listaContas, gerente.getAgencia());
     }
 
     private static void mostrarContasNaAgencia() {
@@ -583,6 +582,7 @@ public class Programa {
                             System.out.println("Conta: " + conta.getNumeroConta() + " / Tipo: " + conta.getTipoConta() + " / Dono: " + conta.getPessoa().getNome());
                         }
                     }
+                    Arquivos.salvarRelatorioClientesAgencia("--------------------------- Clientes por agencia ---------------------------", listaContas, a);
                 } else {
                     System.out.println("Esta agencia não existe!\n");
                 }
@@ -606,6 +606,7 @@ public class Programa {
                 if (conta != null) {
                     continuar = true;
                     System.out.printf("Saldo: %.2f\n", conta.getSaldo());
+                    Arquivos.salvarRelatorioSaldo("--------------------------- Saldo ---------------------------", conta);
                 } else {
                     System.out.println("Esta conta não existe!\n");
                 }
@@ -635,6 +636,7 @@ public class Programa {
                     for (String taxas : conta.getTaxasPagas()) {
                         System.out.println(taxas);
                     }
+                    Arquivos.salvarRelatorioTaxas("--------------------------- Tributação da conta ---------------------------", conta);
                 } else {
                     System.out.println("Esta conta não existe!\n");
                 }
@@ -666,7 +668,9 @@ public class Programa {
                         continuar = true;
                         System.out.printf("\nValor inicia: %.2f\n", valorInicial);
                         System.out.printf("Dias: %d\n", dias);
-                        System.out.printf("Rendimento: %f\n", cp.simularRendimento(valorInicial, dias));
+                        Double valorFinal = cp.simularRendimento(valorInicial, dias);
+                        System.out.printf("Rendimento: %f\n", valorFinal);
+                        Arquivos.salvarRelatorioSimulacao("--------------------------- Rendimento da poupança ---------------------------", valorInicial, dias, valorFinal);
                     } else {
                         System.out.println("Não foi possivel simular o rendimento\n");
                     }
@@ -687,7 +691,9 @@ public class Programa {
             total = total + conta.getSaldo();
             System.out.printf("%s: %f\n", conta.getPessoa().getNome(), conta.getSaldo());
         }
-        System.out.printf("\nTotal no banco: %f", total);
+        System.out.printf("\nTotal no banco: %f\n", total);
+
+        Arquivos.salvarRelatorioTotalNoBanco("--------------------------- Total no banco ---------------------------", listaContas, "Total no banco: " + total);
     }
 
 }

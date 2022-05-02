@@ -1,12 +1,9 @@
 package br.com.serratec.entidadesConta;
 
+import br.com.serratec.entidades.Arquivos;
 import br.com.serratec.entidades.Pessoa;
 import br.com.serratec.enums.Agencia;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +44,7 @@ public abstract class Conta {
                 this.saldo += (quantidade - this.taxa);
                 this.taxasPagasTotal = (this.taxasPagasTotal + this.taxa);
                 this.taxasPagas.add("Taxa de deposito: " + this.taxa);
-                salvarOperacao("Deposito", quantidade, this.taxa);
+                Arquivos.salvarOperacao("Deposito", quantidade, this.taxa, this.numeroConta, this.pessoa.getNome());
                 return true;
             }
             return false;
@@ -63,7 +60,7 @@ public abstract class Conta {
                 this.saldo = this.saldo - (quantidade + this.taxa);
                 this.taxasPagasTotal = (this.taxasPagasTotal + this.taxa);
                 this.taxasPagas.add("Taxa de saque: " + this.taxa);
-                salvarOperacao("Saque", quantidade, this.taxa);
+                Arquivos.salvarOperacao("Saque", quantidade, this.taxa, this.numeroConta, this.pessoa.getNome());
                 return true;
             }
             return false;
@@ -80,7 +77,7 @@ public abstract class Conta {
                 contaDestino.receberTrans(quantidade);
                 this.taxasPagasTotal = (this.taxasPagasTotal + this.taxaTrans);
                 this.taxasPagas.add("Taxa de tranferencia: " + this.taxaTrans);
-                salvarOperacao("Tranferencia", quantidade, this.taxaTrans);
+                Arquivos.salvarOperacao("Tranferencia", quantidade, this.taxaTrans, this.numeroConta, this.pessoa.getNome());
                 return true;
             }
             return false;
@@ -126,33 +123,6 @@ public abstract class Conta {
     public String toString() {
         return "Dono da Conta:\n" + this.pessoa + "\nSALDO: " + this.saldo + "\nTIPO: " + this.tipoConta + "\nNUMERO DA CONTA: " + this.numeroConta;
 
-    }
-
-    private void salvarOperacao(String tipo, Double valor, Double taxa) {
-        System.out.println("Salvando operação...");
-        File arquivo = new File("operacoes.csv");
-        if (!arquivo.exists()) {
-            try {
-                arquivo.createNewFile();
-            } catch (IOException e) {
-                System.out.println("Ocorreu um erro durante a criação do arquivo");
-            }
-        }
-
-        try {
-            FileWriter escritorArquivo = new FileWriter(arquivo, true);
-            BufferedWriter escritorBffArquivo = new BufferedWriter(escritorArquivo);
-
-            escritorBffArquivo.write(tipo + ", " + valor + ", " + taxa + ", " + this.getNumeroConta() + ", " + this.getPessoa().getNome());
-            escritorBffArquivo.newLine();
-
-            escritorBffArquivo.flush();
-            escritorBffArquivo.close();
-            escritorArquivo.close();
-            System.out.println("Operação salva!!!");
-        } catch (IOException e) {
-            System.out.println("Ocorreu um erro durante a escrita do arquivo");
-        }
     }
 
 }
