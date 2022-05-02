@@ -25,83 +25,56 @@ public class Programa {
         //- Cria os objetos do tipo pessoa e coloca em uma lista -------------------------------------------------------
         Pessoa cl1 = new Cliente("77345678910", "Pedro", "22374");
         listaPessoas.add(cl1);
-        listaContas.add(new ContaPoupanca(cl1, A001, 0.15));
-        listaContas.add(new ContaCorrente(cl1, A001, 7000.00));
+        listaContas.add(new ContaPoupanca(cl1, A001));
+        listaContas.add(new ContaCorrente(cl1, A001));
         
         Pessoa cl2 = new Cliente("59468752136", "Marcos", "55669");
         listaPessoas.add(cl2);
-        listaContas.add(new ContaPoupanca(cl2, A002, 0.15));
-        listaContas.add(new ContaCorrente(cl2, A002, 7000.00));
+        listaContas.add(new ContaPoupanca(cl2, A002));
+        listaContas.add(new ContaCorrente(cl2, A002));
         
         Pessoa cl3 = new Cliente("78513264591", "Mylena", "56321");
         listaPessoas.add(cl3);
-        listaContas.add(new ContaPoupanca(cl3, A003, 0.15));
-        listaContas.add(new ContaCorrente(cl3, A003, 7000.00));
+        listaContas.add(new ContaPoupanca(cl3, A003));
+        listaContas.add(new ContaCorrente(cl3, A003));
 
         Pessoa ger1 = new Gerente("90345678910", "Amanda", "892374", A001);
         listaPessoas.add(ger1);
-        listaContas.add(new ContaPoupanca(ger1, A001, 0.15));
-        listaContas.add(new ContaCorrente(ger1, A001, 7000.00));
+        listaContas.add(new ContaPoupanca(ger1, A001));
+        listaContas.add(new ContaCorrente(ger1, A001));
         
         Pessoa ger2 = new Gerente("13128451550", "Gabriel", "12345", A002);
         listaPessoas.add(ger2);
-        listaContas.add(new ContaPoupanca(ger2, A002, 0.15));
-        listaContas.add(new ContaCorrente(ger2, A002, 7000.00));
+        listaContas.add(new ContaPoupanca(ger2, A002));
+        listaContas.add(new ContaCorrente(ger2, A002));
         
         Pessoa ger3 = new Gerente("51263498632", "Lucas", "vihuchi", A003);
         listaPessoas.add(ger3);
-        listaContas.add(new ContaPoupanca(ger3, A003, 0.15));
-        listaContas.add(new ContaCorrente(ger3, A003, 7000.00));
+        listaContas.add(new ContaPoupanca(ger3, A003));
+        listaContas.add(new ContaCorrente(ger3, A003));
 
         Pessoa dir2 = new Diretor("06445419155", "Leticia", "917775");
         listaPessoas.add(dir2);
-        listaContas.add(new ContaPoupanca(dir2, A002, 0.15));
-        listaContas.add(new ContaCorrente(dir2, A002, 7000.00));
+        listaContas.add(new ContaPoupanca(dir2, A002));
+        listaContas.add(new ContaCorrente(dir2, A002));
 
         Pessoa pres1 = new Presidente("00345678910", "Heitor", "00374");
         listaPessoas.add(pres1);
-        listaContas.add(new ContaPoupanca(pres1, A001, 0.15));
-        listaContas.add(new ContaCorrente(pres1, A001, 7000.00));
+        listaContas.add(new ContaPoupanca(pres1, A001));
+        listaContas.add(new ContaCorrente(pres1, A001));
 
-        //--------------------------------------------------------------------------------------------------------------
-
-
-        //- Faz o login do usuario
-        while (usuario == null) {
-            usuario = login();
-        }
         //--------------------------------------------------------------------------------------------------------------
 
         //- Roda o menu ------------------------------------------------------------------------------------------------
-        boolean continuar = true;
-        boolean erro = false;
         do {
+            //- Faz o login do usuario -------------------------------------------------------------------------------------
+            while (usuario == null) {
+                usuario = login();
+            }
+            //--------------------------------------------------------------------------------------------------------------
             menuGeral();
-            //- Verifica se deseja sair do sistema ---------------------------------------------------------------------
-            do {
-                erro = false;
-                try {
-                    System.out.print("\nDeseja sair do sistema (s/n): ");
-                    String c = sc.next();
-                    if (!c.equals("s") && !c.equals("S") && !c.equals("n") && !c.equals("N")) {
-                        System.out.println("\nOpção invalida!\nInforme uma opção valida!!!");
-                        erro = true;
-                    } else {
-                        if (c.equals("s") || c.equals("S")) {
-                            continuar = false;
-                        }
-                    }
-                } catch (InputMismatchException e) {
-                    System.out.println("Opção invalida!\nInforme uma opção valida!!!");
-                    erro = true;
-                    sc.next();
-                }
-            } while (erro);
-            //----------------------------------------------------------------------------------------------------------
-        } while (continuar);
+        } while (true);
         //--------------------------------------------------------------------------------------------------------------
-
-        sc.close();
     }
 
     private static Pessoa login() {
@@ -127,6 +100,32 @@ public class Programa {
 
         System.out.println("O usuario não existe!");
         return null;
+    }
+
+    private static void sair(){
+        //- Verifica se deseja sair do sistema ---------------------------------------------------------------------
+        boolean erro;
+        do {
+            erro = false;
+            try {
+                System.out.print("\nDeseja sair do sistema (s/n): ");
+                String c = sc.next();
+                if (!c.equals("s") && !c.equals("S") && !c.equals("n") && !c.equals("N")) {
+                    System.out.println("\nOpção invalida!\nInforme uma opção valida!!!");
+                    erro = true;
+                } else {
+                    if (c.equals("s") || c.equals("S")) {
+                        usuario = null;
+                        System.out.println("\n\n\n\n\n\n\n\n\n");
+                    }
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Opção invalida!\nInforme uma opção valida!!!");
+                erro = true;
+                sc.next();
+            }
+        } while (erro);
+        //----------------------------------------------------------------------------------------------------------
     }
 
     private static void menuGeral() {
@@ -167,11 +166,10 @@ public class Programa {
                 System.out.println("\nOpção invalida!\nInforme uma opção valida!!!\n");
             }
         }
-        System.out.println("\n");
 
         switch (opcoaoEscolhida) {
             case 0:
-                System.exit(1);
+                sair();
                 break;
             case 1:
                 fazerSaque();
@@ -214,7 +212,7 @@ public class Programa {
 
         switch (opcoaoEscolhida) {
             case 0:
-                System.exit(1);
+                sair();
                 break;
             case 1:
                 fazerSaque();
@@ -261,7 +259,7 @@ public class Programa {
 
         switch (opcoaoEscolhida) {
             case 0:
-                System.exit(1);
+                sair();
                 break;
             case 1:
                 fazerSaque();
@@ -312,7 +310,7 @@ public class Programa {
 
         switch (opcoaoEscolhida) {
             case 0:
-                System.exit(1);
+                sair();
                 break;
             case 1:
                 fazerSaque();
@@ -534,6 +532,12 @@ public class Programa {
         return null;
     }
 
+    private static void mostrarAgencias(){
+        for (Agencia a : Agencia.values()) {
+            System.out.println(a.toString());
+        }
+    }
+
     private static void mostrasContas() {
         for (Conta conta : listaContas) {
             if (conta.getPessoa() == usuario) {
@@ -585,7 +589,7 @@ public class Programa {
         while (!con) {
             try {
                 System.out.println("Agencias: ");
-                System.out.println(Arrays.asList(Agencia.values()));
+                mostrarAgencias();
                 System.out.println("Informe a agencia: ");
                 String agencia = sc.next();
                 Agencia a = validaAgencia(agencia);

@@ -5,27 +5,9 @@ import br.com.serratec.enums.Agencia;
 
 public class ContaCorrente extends Conta {
 
-    private double limiteEmprestimo;
-
-    public ContaCorrente(Pessoa pessoa, Agencia agencia, double limiteEmprestimo) {
+    public ContaCorrente(Pessoa pessoa, Agencia agencia) {
         super(pessoa, agencia);
-        this.limiteEmprestimo = limiteEmprestimo;
         this.tipoConta = "Corrente";
-    }
-
-    public double getLimiteEmprestimo() {
-        return limiteEmprestimo;
-    }
-
-    public void setLimiteEmprestimo(double limiteEmprestimo) {
-        this.limiteEmprestimo = limiteEmprestimo;
-    }
-
-    public void pedirEmprestimo(double valor) {
-        if (this.limiteEmprestimo >= valor) {
-            this.limiteEmprestimo -= valor;
-            this.saldo += valor;
-        }
     }
 
     @Override
@@ -36,9 +18,7 @@ public class ContaCorrente extends Conta {
                         + "\nSALDO: "
                         + saldo
                         + "\nTIPO: "
-                        + tipoConta
-                        + "\nLIMITE EMPRESTIMO: "
-                        + limiteEmprestimo;
+                        + tipoConta;
 
     }
 }
