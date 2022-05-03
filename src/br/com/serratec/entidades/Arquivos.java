@@ -10,11 +10,13 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
+// Seria bom que esse arquivo ficasse em um pacote diferente, porque ele lida com uma camada diferente da aplicação
 public class Arquivos {
     public static void salvarOperacao(String tipo, Double valor, Double taxa, Integer conta, String done) {
         System.out.println("Salvando operação...");
         File arquivo = new File("operacoes.csv");
+        // A tendência é que essa verificação ocorra em diversos pontos do arquivo, então seria melhor
+        // que fosse uma função separada
         if (!arquivo.exists()) {
             try {
                 arquivo.createNewFile();

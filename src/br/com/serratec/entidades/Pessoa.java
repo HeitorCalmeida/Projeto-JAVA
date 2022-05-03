@@ -5,9 +5,13 @@ public class Pessoa {
     protected String cpf;
     protected String nome;
     protected String senha;
+    // Esse atributo poderia ser estático
     protected Integer tipo;
 
     public Pessoa(String cpf, String nome, String senha, Integer tipo) {
+    	// Esse tipo de verificação só impede que você preencha os campos da pessoa,
+    	// mas a pessoa continua sendo instanciada da mesma forma. O correto seria lançar uma exceção
+    	// se o cpf estivesse incorreto.
         if (cpf.length() == 11) {
             this.cpf = cpf;
             this.nome = nome;

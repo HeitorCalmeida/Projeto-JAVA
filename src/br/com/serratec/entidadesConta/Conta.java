@@ -10,12 +10,15 @@ import java.util.List;
 public abstract class Conta {
 
     protected Double saldo;
+    // Esse atributo poderia ser estático, já que uma conta corrente sempre será do tipo corrente, por exemplo.
+    // Inclusive, poderia ser um enum para limitar melhor as opções
     protected String tipoConta;
     protected Pessoa pessoa;
     protected List<String> taxasPagas = new ArrayList<String>();
     protected Double taxasPagasTotal;
     protected Agencia agencia;
     protected Integer numeroConta;
+    // Essas taxas poderia ser externas à conta. Poderiam estar em um enum
     protected Double taxa;
     protected Double taxaTrans;
 
@@ -26,6 +29,7 @@ public abstract class Conta {
         this.taxasPagasTotal = 0.00;
         this.taxa = 0.10;
         this.taxaTrans = 0.20;
+        // Boa ideia, um algoritmo mais aleatório seria usar a própria função de hash do java para gerar o numero da conta
         this.numeroConta = (int) Math.floor(Math.random() * (999999999 - 1 + 1) + 0);
 
     }
