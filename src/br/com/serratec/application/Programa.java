@@ -156,6 +156,7 @@ public class Programa {
 	private static void menuCliente(Cliente cliente, String opt) {
 		System.out.println(opt);
 		Integer opcoaoEscolhida = null;
+		// Nesse casos, o ideal é usar um do...while
 		while (opcoaoEscolhida == null) {
 			System.out.print("Digite a opção desejada: ");
 			try {
@@ -163,6 +164,7 @@ public class Programa {
 			} catch (InputMismatchException e) {
 				System.out.println("\nOpção invalida!\nInforme uma opção valida!!!\n");
 			}
+			// Aqui teria que ter um leitor.nextLine() para evitar a criação de um loop infinito caso eu digite uma letra
 		}
 
 		switch (opcoaoEscolhida) {
